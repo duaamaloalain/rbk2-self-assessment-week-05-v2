@@ -18,32 +18,44 @@ angular.module('app', ['ngRoute'])
 /*  HINT: Make sure your controllers, methods, and variables 
     are named what $routeProvider and the partials are expecting  */
   
-  .factory('counter', function(){
-    $scope.counter++;
-  })
-
-  .controller('fizzbuzzCtrl', function($scope){
-    $scope.counter=0;  
-    $scope.increment=function () {
-      if ($scope.counter % 3 === 0){
-        return "FIZZ"; 
-      }else if ($scope.counter % 5 === 0){
-        return "BUZZ";
-      }else if ($scope.counter % 3 === 0 && $scope.counter % 5 === 0 ){
-        return "FIZZBUZZ";
-      } 
-    }
-  })
-
-  .controller('fozzbazzCtrl', function($scope){
-      $scope.counter=0;  
-      $scope.increment=function () {
-        if ($scope.counter % 4 === 0){
-          return "FOZZ"; 
-        }else if ($scope.counter % 6 === 0){
-          return "BAZZ";
-        }else if ($scope.counter % 4 === 0 && $scope.counter % 6 === 0 ){
-          return "FOZZBAZZ";
-        } 
+ .factory('counter', function(){
+    
+    var $scope = {};
+    $scope.count = 0;
+    $scope.display = "";
+    $scope.increment = function() {
+      $scope.count++;
+      if ($scope.count % 3 === 0) {
+        $scope.display = "FIZZ"
       }
+     else if ($scope.count % 5 === 0) {
+        $scope.display = "BUZZ"
+      } 
+     else if ($scope.count % 3 === 0 && $scope.count % 5 === 0) {
+        $scope.display = "FIZZBUZZ"
+      }
+      else if ($scope.count % 4 === 0) {
+        $scope.display = " FOZZ"
+      }
+      else if ($scope.count % 6 === 0) {
+        $scope.display = "BAZZ"
+      }
+      else if ($scope.count % 4 === 0 && $scope.count % 6 === 0) {
+        $scope.display = "FOZZBAZZ"
+      }
+     else{
+      $scope.display=$scope.count;
+     }      
+    } 
+  return $scope;
+})
+   
+  .controller('fizzbuzzCtrl', function($scope,counter){
+    $scope.increment= counter.increment();
+    $scope.display = counter.display;
+   
+  })
+  .controller('fozzbazzCtrl', function($scope,counter){
+    $scope.increment = counter.increment();
+    $scope.display =counter.display;
   });
